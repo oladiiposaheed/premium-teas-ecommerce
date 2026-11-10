@@ -19,21 +19,38 @@ export interface Product {
     available: boolean;
 }
 
-export async function getProducts(): Promise<Product[]> {
-    const res = await fetch(`${API_URL}/api/products/`, {
-        cache: 'no-cache'
+// 1. Fetch all categories for the sidebar
+export async function getCategories(): Promise<Category[]> {
+    const res = await fetch(`${API_URL}/api/categories/`, { cache: 'no-store' });
+
+    if (!res.ok) 
+        throw new Error('Failed to fetch categories');
+    return res.json();
+}
+
+// 2. Accept an optional categorySlug
+export async function getProducts(categorySlug?: string): Promise<Product[]> {
+
+    // If a category is provided, hit the category API endpoint
+    const url = categorySlug
+        ? `${API_URL}/api/products/${categorySlug}/`
+        : `${API_URL}/api/products/`;
+
+    const res = await fetch(url, {
+        cache: 'no-store'
     });
 
     if (!res.ok) {
-        throw new Error('Failed to fetch products');
+        throw new Error('Failed to fetch products')
     }
 
     return res.json();
 }
 
+
 export async function getProduct(slug: string) {
-    const res = await fetch(`${API_URL}/api/products/${slug}/`, {
-        cache: 'no-cache'
+    const res = await fetch(`${API_URL}/api/products/detail/${slug}/`, {
+        cache: 'no-store'
     });
 
     if (!res.ok) {
