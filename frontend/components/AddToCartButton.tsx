@@ -12,8 +12,10 @@ export default function AddToCartButton({ productId }: { productId: number }) {
 
         try {
             await addToCart(productId);
+            //alert("Successfully added to cart!"); 
         } catch (error) {
          console.error("Failed to add:", error);   
+       //  alert("Failed to add to cart. Check console.");
         } finally {
             setIsAdding(false);
         }

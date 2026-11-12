@@ -44,6 +44,7 @@ export default async function Home({
                   src={product.image}
                   alt={product.name}
                   fill
+                  priority
                   sizes="(max-width: 768px) 100vw, 25vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />

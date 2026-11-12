@@ -1,0 +1,58 @@
+<html>
+<head>
+    <style>
+        body { font-family: Helvetica, sans-serif; color: #333; }
+        h1 { color: #1e293b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background-color: #f1f5f9; padding: 10px; text-align: left; border-bottom: 2px solid #cbd5e1; }
+        td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+        .num { text-align: right; }
+        .total { font-weight: bold; background-color: #f8fafc; }
+        .paid { color: #16a34a; font-weight: bold; border: 2px solid #16a34a; padding: 5px; display: inline-block; }
+        .pending { color: #dc2626; font-weight: bold; border: 2px solid #dc2626; padding: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Premium Teas</h1>
+    <p>
+        Invoice no. {{ order.id }}<br>
+        <span class="secondary">{{ order.created|date:"M d, Y" }}</span>
+    </p>
+    <h3>Bill to</h3>
+    <p>
+        {{ order.first_name }} {{ order.last_name }}<br>
+        {{ order.email }}<br>
+        {{ order.address }}<br>
+        {{ order.postal_code }}, {{ order.city }}
+    </p>
+    <h3>Items bought</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td class="num">${{ item.price }}</td>
+                    <td class="num">{{ item.quantity }}</td>
+                    <td class="num">${{ item.get_cost }}</td>
+                </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">Total</td>
+                <td class="num">${{ order.get_total_cost }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+        {% if order.paid %}PAID{% else %}PENDING PAYMENT{% endif %}
+    </span>
+</body>
+</html>

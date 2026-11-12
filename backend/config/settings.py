@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -140,11 +143,20 @@ CORS_ALLOWED_ORIGINS = [
 # Key used to store the cart in the user's session
 CART_SESSION_ID = 'cart'
 
-# Allow the browser to send the session cookie across different ports
-CORS_ALLOW_CREDENTIALS = True
-
 # Tell Django to trust Next.js for POST requests (CSRF)
 CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:3000',
     'http://localhost:3000',
+    'http://127.0.0.1:3000',
 ]
+
+# Allow the browser to send the session cookie across different ports
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_DOMAIN = None 
+
+
+# Stripe Settings
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+STRIPE_API_VERSION = '2024-04-10'
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET')

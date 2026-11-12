@@ -2,10 +2,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
-  //cacheComponents: true,
-  //partialPrefetching: true,
+  
   turbopack: {
     rules: {
       "*.css": {
@@ -15,13 +13,19 @@ const nextConfig: NextConfig = {
     },
   },
   
-  // ADD THIS BLOCK:
   images: {
-    dangerouslyAllowLocalIP: true, // Required for Next 16 to allow 127.0.0.1
+    dangerouslyAllowLocalIP: true,
     remotePatterns: [
       {
         protocol: 'http',
         hostname: '127.0.0.1',
+        port: '8000',
+        pathname: '/media/**',
+      },
+      
+      {
+        protocol: 'http',
+        hostname: 'localhost',
         port: '8000',
         pathname: '/media/**',
       },

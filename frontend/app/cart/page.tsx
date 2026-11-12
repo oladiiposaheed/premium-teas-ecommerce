@@ -143,9 +143,12 @@ export default function CartPage() {
           >
             Continue shopping
           </Link>
-          <button className="w-full sm:w-auto px-6 py-2.5 bg-slate-900 hover:bg-black text-white font-semibold text-sm rounded-lg shadow-md transition-colors">
+          <Link
+            href='/checkout'
+            className="w-full sm:w-auto text-center px-6 py-2.5 bg-slate-900 hover:bg-black text-white font-semibold text-sm rounded-lg shadow-md transition-colors"
+          >
             Proceed to Checkout
-          </button>
+          </Link>
         </div>
       )}
     </div>

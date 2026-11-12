@@ -94,5 +94,5 @@ class Cart:
     def clear(self):
         '''Remove the entire cart from the session (used after checkout).'''
         
-        del self.session[self.session.CART_SESSION_ID]
+        del self.session[settings.CART_SESSION_ID]
         self.save()
